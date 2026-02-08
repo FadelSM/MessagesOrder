@@ -5,19 +5,35 @@
 using namespace std;
 
 class Message {
-public: 
+public:
     Message() {}
-    const string& get_text() {
-        
+
+    Message(const string& text, int order)
+        : text_(text), order_(order) {}
+
+    const string& get_text() const {
+        return text_;
     }
+
+    bool operator<(const Message& other) const {
+        return order_ < other.order_;
+    }
+
+private:
+    string text_;
+    int order_;
 };
 
 class MessageFactory {
 public:
-    MessageFactory() {}
+    MessageFactory() : id_(0) {}
+
     Message create_message(const string& text) {
-        
+        return Message(text, id_++);
     }
+
+private:
+    int id_;
 };
 
 class Recipient {
